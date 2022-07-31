@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChartJS Line Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
+    <style>
+        .myChart {
+            margin: 20px 100px;
+        }
+
+        body {
+            background-color: rgb(45, 45, 45);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myChart" class="myChart"></canvas>
+
+    <script>
+        let pushDataButton = document.getElementById('myChart');
+        pushDataButton.addEventListener('click', () => {
+            myChart.data.labels.push('');
+            myChart.data.labels.shift();
+            myChart.data.datasets[0].data.push(Math.random() * 20 + 20);
+            myChart.data.datasets[0].data.shift();
+            myChart.data.datasets[1].data.push(Math.random() * 30 + 50);
+            myChart.data.datasets[1].data.shift();
+            myChart.update();
+        })
+
+        let delayed;
+        const temp = Array(20).fill().map(function rand() {
+            return Math.random() * 20 + 20;
+        })
+        const humi = Array(20).fill().map(() => Math.random() * 30 + 50);
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                datasets: [{
+                        label: 'Tempearture',
+                        data: temp,
+                        backgroundColor: 'rgba(54, 162, 235, 1)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 3,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Humidity',
+                        data: humi,
+                        backgroundColor: 'rgba(255, 206, 86, 1)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 3,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Tony Space Node #99',
+                        color: 'white',
+
+                    },
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
